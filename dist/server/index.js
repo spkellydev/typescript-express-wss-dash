@@ -1,15 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * @package Typescript Express WSS API
+ * @summary Server implementation of Analytics Dashboard
+ */
 const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
 const port = 8080;
 const app = express();
-//initialize a simple http server
+/**
+ * (alias) server
+ * relies on http.createServer,
+ * relies on expreess()
+ * initialize a simple http server
+ */
 const server = http.createServer(app);
-//initialize the WebSocket server instance
+/**
+ * WebSocket server instance
+ * relies on http.createServer,
+ * relies on express()
+ */
 const wss = new WebSocket.Server({ server });
-// IExtWebSocket typeguard
+/**
+ * isExtended
+ * checks for ws typed as IExtWebSocket and returns correct typing
+ * necessary for iterating over Sets of WebSockets
+ * @param ws <WebSocket>
+ * @example wss.clients.forEach((ws: WebSocket) => {
+ *  if(!isExtend(ws)) return
+ *  if (!ws.isAlive) return ws.terminate();
+ * })
+ */
 function isExtended(ws) {
     return typeof ws.isAlive == "boolean";
 }
@@ -36,17 +58,20 @@ wss.on("connection", (ws) => {
         }
     });
 });
+// poll connection
 setInterval(() => {
     wss.clients.forEach((ws) => {
+        // type guard
         if (!isExtended(ws)) {
             return;
         }
+        // kill polling
         if (!ws.isAlive)
             return ws.terminate();
         ws.isAlive = false;
         ws.ping(null, false);
     });
-}, 1000);
+}, 1000).unref(); // allow server to disconnect
 //start our server
 server.listen(process.env.PORT || port, () => {
     // port resolves to string | WebSocket.AddressInfo if not served over TCP

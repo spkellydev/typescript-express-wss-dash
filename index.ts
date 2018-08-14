@@ -1,3 +1,7 @@
+/**
+ * @package Typescript Express WSS API
+ * @summary Server implementation of Analytics Dashboard
+ */
 import * as express from "express";
 import * as http from "http";
 import * as WebSocket from "ws";
@@ -5,19 +9,43 @@ const port = 8080;
 
 const app = express();
 
-//initialize a simple http server
+/**
+ * (alias) server
+ * relies on http.createServer,
+ * relies on expreess()
+ * initialize a simple http server
+ */
 const server = http.createServer(app);
 
-//initialize the WebSocket server instance
+/**
+ * WebSocket server instance
+ * relies on http.createServer,
+ * relies on express()
+ */
 const wss = new WebSocket.Server({ server });
 
+/**
+ * IExtWebSocket extends WebSocket default functionality
+ * @extends WebSocket
+ * @property isAlive<boolean>
+ * @see isExtended typeguard
+ */
 interface IExtWebSocket extends WebSocket {
   isAlive: boolean;
 }
 
-// IExtWebSocket typeguard
+/**
+ * isExtended
+ * checks for ws typed as IExtWebSocket and returns correct typing
+ * necessary for iterating over Sets of WebSockets
+ * @param ws <WebSocket>
+ * @example wss.clients.forEach((ws: WebSocket) => {
+ *  if(!isExtend(ws)) return
+ *  if (!ws.isAlive) return ws.terminate();
+ * })
+ */
 function isExtended(ws: WebSocket): ws is IExtWebSocket {
-  return typeof (ws as any).isAlive == "boolean";
+  return typeof (ws as IExtWebSocket).isAlive == "boolean";
 }
 
 wss.on("connection", (ws: IExtWebSocket) => {
@@ -48,18 +76,21 @@ wss.on("connection", (ws: IExtWebSocket) => {
   });
 });
 
+// poll connection
 setInterval(() => {
   wss.clients.forEach((ws: WebSocket) => {
+    // type guard
     if (!isExtended(ws)) {
       return;
     }
 
+    // kill polling
     if (!ws.isAlive) return ws.terminate();
 
     ws.isAlive = false;
     ws.ping(null, false);
   });
-}, 1000);
+}, 1000).unref(); // allow server to disconnect
 
 //start our server
 server.listen(process.env.PORT || port, () => {
