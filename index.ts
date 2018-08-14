@@ -1,6 +1,7 @@
 /**
  * @package Typescript Express WSS API
  * @summary Server implementation of Analytics Dashboard
+ * @version 0.0.0
  */
 import * as express from "express";
 import * as http from "http";
@@ -38,6 +39,8 @@ interface IExtWebSocket extends WebSocket {
  * isExtended
  * checks for ws typed as IExtWebSocket and returns correct typing
  * necessary for iterating over Sets of WebSockets
+ * @since 0.0.0
+ * @version 0.0.0
  * @param ws <WebSocket>
  * @example wss.clients.forEach((ws: WebSocket) => {
  *  if(!isExtend(ws)) return
