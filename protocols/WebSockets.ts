@@ -1,17 +1,8 @@
 import * as WebSocket from "ws";
 import { Server as HttpServer } from "http";
+import { ISocketer, IExtWebSocket } from "../interfaces/sockets";
 
-/**
- * IExtWebSocket extends WebSocket default functionality
- * @extends WebSocket
- * @property isAlive<boolean>
- * @see isExtended typeguard
- */
-interface IExtWebSocket extends WebSocket {
-  isAlive: boolean;
-}
-
-class Socketer {
+class Socketer implements ISocketer {
   wss: WebSocket.Server;
 
   constructor(server: HttpServer) {
@@ -25,7 +16,7 @@ class Socketer {
     });
   }
 
-  public listen() {
+  public listen(): void {
     this.wss.on("connection", (ws: IExtWebSocket) => {
       ws.isAlive = true;
 
@@ -33,26 +24,28 @@ class Socketer {
         ws.isAlive = true;
       });
 
-      ws.on("message", (message: string) => {
-        //log the received message and send it back to the client
-        console.log("received: %s", message);
+      ws.on("message", this.onMessage);
+    });
+  }
 
-        const broadcastRegex = /^broadcast\:/;
+  public onMessage(message: string, ws: WebSocket): void {
+    //log the received message and send it back to the client
+    console.log("received: %s", message);
 
-        if (broadcastRegex.test(message)) {
-          message = message.replace(broadcastRegex, "");
+    const broadcastRegex = /^broadcast\:/;
 
-          //send back the message to the other clients
-          this.wss.clients.forEach(client => {
-            if (client != ws) {
-              client.send(`Hello, broadcast message -> ${message}`);
-            }
-          });
-        } else {
-          ws.send(`Hello, you sent -> ${message}`);
+    if (broadcastRegex.test(message)) {
+      message = message.replace(broadcastRegex, "");
+
+      //send back the message to the other clients
+      this.wss.clients.forEach(client => {
+        if (client != ws) {
+          client.send(`Hello, broadcast message -> ${message}`);
         }
       });
-    });
+    } else {
+      ws.send(`Hello, you sent -> ${message}`);
+    }
   }
 
   /**
