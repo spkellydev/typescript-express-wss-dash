@@ -5,10 +5,8 @@
  */
 import * as fs from "fs";
 import * as cors from "cors";
-import * as http from "http";
 import * as logger from "morgan";
 import * as helmet from "helmet";
-import * as WebSocket from "ws";
 import * as express from "express";
 import * as mongoose from "mongoose";
 import * as bodyParser from "body-parser";
