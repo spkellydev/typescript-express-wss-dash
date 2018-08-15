@@ -15,7 +15,7 @@ import * as bodyParser from "body-parser";
 import * as compression from "compression";
 
 // import routers
-import GoogleRouter from "./routes/GoogleRouter";
+import GoogleRouter from "../routes/GoogleRouter";
 
 const dev = process.env.NODE_ENV != "production";
 

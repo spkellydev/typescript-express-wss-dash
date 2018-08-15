@@ -8,7 +8,8 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-import Server from "./server";
+import Server from "./protocols/HttpServer";
+import Socketer from "./protocols/WebSockets";
 
 debug("ts-dash:server");
 
@@ -18,73 +19,15 @@ Server.set("port", port);
 console.log(`Server listening on port ${port}`);
 
 const server = http.createServer(Server);
+const socketer = new Socketer(server);
 
-/**
- * WebSocket server instance
- * relies on http.createServer,
- * relies on express()
- */
-const wss = new WebSocket.Server({ server });
-
-/**
- * IExtWebSocket extends WebSocket default functionality
- * @extends WebSocket
- * @property isAlive<boolean>
- * @see isExtended typeguard
- */
-interface IExtWebSocket extends WebSocket {
-  isAlive: boolean;
-}
-
-/**
- * isExtended
- * checks for ws typed as IExtWebSocket and returns correct typing
- * necessary for iterating over Sets of WebSockets
- * @since 0.0.0
- * @version 0.0.0
- * @param ws <WebSocket>
- * @example wss.clients.forEach((ws: WebSocket) => {
- *  if(!isExtend(ws)) return
- *  if (!ws.isAlive) return ws.terminate();
- * })
- */
-function isExtended(ws: WebSocket): ws is IExtWebSocket {
-  return typeof (ws as IExtWebSocket).isAlive == "boolean";
-}
-
-wss.on("connection", (ws: IExtWebSocket) => {
-  ws.isAlive = true;
-
-  ws.on("pong", () => {
-    ws.isAlive = true;
-  });
-
-  ws.on("message", (message: string) => {
-    //log the received message and send it back to the client
-    console.log("received: %s", message);
-
-    const broadcastRegex = /^broadcast\:/;
-
-    if (broadcastRegex.test(message)) {
-      message = message.replace(broadcastRegex, "");
-
-      //send back the message to the other clients
-      wss.clients.forEach(client => {
-        if (client != ws) {
-          client.send(`Hello, broadcast message -> ${message}`);
-        }
-      });
-    } else {
-      ws.send(`Hello, you sent -> ${message}`);
-    }
-  });
-});
+socketer.listen();
 
 // poll connection
 setInterval(() => {
-  wss.clients.forEach((ws: WebSocket) => {
+  socketer.wss.clients.forEach((ws: WebSocket) => {
     // type guard
-    if (!isExtended(ws)) {
+    if (!socketer.isExtended(ws)) {
       return;
     }
 
