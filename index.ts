@@ -4,6 +4,10 @@ import * as logger from "morgan";
 import * as helmet from "helmet";
 import * as WebSocket from "ws";
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 import Server from "./server";
 
 debug("ts-dash:server");
