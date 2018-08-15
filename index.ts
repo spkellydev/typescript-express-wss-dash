@@ -1,65 +1,19 @@
-/**
- * @package Typescript Express WSS API
- * @summary Server implementation of Analytics Dashboard
- * @version 0.0.0
- */
-import * as cors from "cors";
+import * as debug from "debug";
 import * as http from "http";
 import * as logger from "morgan";
 import * as helmet from "helmet";
 import * as WebSocket from "ws";
-import * as express from "express";
-import * as mongoose from "mongoose";
-import * as bodyParser from "body-parser";
-import * as compression from "compression";
 
-const dev = process.env.NODE_ENV != "production";
+import Server from "./server";
 
-class Server {
-  public app: express.Application;
+debug("ts-dash:server");
 
-  constructor() {
-    this.app = express();
-    this.config();
-    this.routes();
-  }
+const port = normalizePort(process.env.PORT || 8080);
+Server.set("port", port);
 
-  config() {
-    const MONGO_URI = "mongodb://localhost:27017/dashboard";
-    mongoose.connect(
-      MONGO_URI || process.env.MONGODB_URI,
-      { useNewUrlParser: true }
-    );
+console.log(`Server listening on port ${port}`);
 
-    this.app.use(logger(dev ? "dev" : "combined"));
-    this.app.use(bodyParser.urlencoded({ extended: true }));
-    this.app.use(bodyParser.json());
-    this.app.use(compression());
-    this.app.use(helmet());
-    this.app.use(cors());
-  }
-
-  public routes() {
-    let router: express.Router;
-    router = express.Router();
-
-    this.app.use("/", router);
-  }
-}
-
-export default new Server().app;
-
-const PORT = 8080;
-
-const app = express();
-
-/**
- * (alias) server
- * relies on http.createServer,
- * relies on express()
- * initialize a simple http server
- */
-const server = http.createServer(app);
+const server = http.createServer(Server);
 
 /**
  * WebSocket server instance
@@ -138,9 +92,42 @@ setInterval(() => {
   });
 }, 1000).unref(); // allow server to disconnect
 
-//start our server
-server.listen(process.env.PORT || PORT, () => {
-  // port resolves to string | WebSocket.AddressInfo if not served over TCP
-  const { port } = server.address() as WebSocket.AddressInfo;
-  console.log(`Server started on port ${port} :)`);
-});
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);
+
+function normalizePort(val: number | string): number | string | boolean {
+  const port: number = typeof val === "string" ? parseInt(val, 10) : val;
+  if (isNaN(port)) {
+    return val;
+  } else if (port >= 0) {
+    return port;
+  } else {
+    return false;
+  }
+}
+
+function onError(error: NodeJS.ErrnoException): void {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+  const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+  switch (error.code) {
+    case "EACCES":
+      console.error(`${bind} requires elevated privileges`);
+      process.exit(1);
+      break;
+    case "EADDRINUSE":
+      console.error(`${bind} is already in use`);
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+function onListening(): void {
+  const addr = server.address();
+  const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
+  console.log(`Listening on ${bind}`);
+}
