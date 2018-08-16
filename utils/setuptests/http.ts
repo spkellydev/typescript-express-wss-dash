@@ -1,10 +1,21 @@
 import Server from "../../protocols/HttpServer";
 import * as http from "http";
 
+interface PostRoutes {
+  type: string,
+  route: string,
+  body: Object
+}
+
+interface TestRoutes {
+  get: Array<string>,
+  post: Array<PostRoutes>
+}
+
 export default class TestServer extends http.Server {
   public server: http.Server;
   public port: number;
-  public routes: Array<String>;
+  public routes: TestRoutes;
 
   constructor() {
     super();
@@ -12,7 +23,17 @@ export default class TestServer extends http.Server {
     Server.set("port", this.port);
     this.server = http.createServer(Server);
     // routes list, header slash not needed
-    this.routes = ["ga"];
+    this.routes = {
+      get: ["ga"],
+      post: [{
+        route: "signup",
+        body: {
+          type: "signup",
+          email: "spkellydev@gmail.com",
+          password: "1234"
+        }
+      }]
+    };
   }
 
   public setupServer(): http.Server {

@@ -11,12 +11,21 @@ import * as express from "express";
 import * as mongoose from "mongoose";
 import * as bodyParser from "body-parser";
 import * as compression from "compression";
+require("dotenv").config();
 
 // import routers
 import GoogleRouter from "../routes/GoogleRouter";
 import AuthRouter from "../routes/AuthRouter";
 
+let DBNAME = "";
 const dev = process.env.NODE_ENV != "production";
+if (process.env.NODE_ENV === "test") {
+  DBNAME = process.env.TEST_DB_NAME as string;
+} else if (dev) {
+  DBNAME = process.env.DEV_DB_NAME as string;
+} else {
+  DBNAME = process.env.PROD_DB_NAME as string;
+}
 
 /**
  * @name Server
@@ -33,9 +42,9 @@ class Server {
   }
 
   config() {
-    const MONGO_URI = "mongodb://localhost:27017/dashboard";
+    const MONGO_URI = `mongodb://localhost:27017/${DBNAME}`;
     mongoose.connect(
-      MONGO_URI || process.env.MONGODB_URI,
+      MONGO_URI || process.env.MONGODB_URI as string,
       { useNewUrlParser: true }
     );
 
