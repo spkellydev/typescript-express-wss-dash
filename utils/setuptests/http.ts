@@ -4,7 +4,7 @@ import * as http from "http";
 interface PostRoutes {
   type: string,
   route: string,
-  body: Object
+  body: any
 }
 
 interface TestRoutes {
@@ -27,8 +27,8 @@ export default class TestServer extends http.Server {
       get: ["ga"],
       post: [{
         route: "signup",
+        type: "signup",
         body: {
-          type: "signup",
           email: "spkellydev@gmail.com",
           password: "1234"
         }
