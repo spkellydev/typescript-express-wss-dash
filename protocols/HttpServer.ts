@@ -39,26 +39,35 @@ class Server {
       { useNewUrlParser: true }
     );
 
-    // this.app.use(
+    //this.app.use(
     //   logger("common", {
     //     stream: fs.createWriteStream("./logs/access.log", { flags: "a" })
     //   })
-    // );
+    // ); // TODO: Production
     this.app.use(logger(dev ? "dev" : "combined"));
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
     this.app.use(compression());
     // this.app.use(helmet()); // TODO: Production
     this.app.use(cors());
+    this.app.use(function (
+      err: Error,
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) {
+      console.error(err.stack);
+      res.send("Something broke!");
+    });
   }
 
   public routes() {
     let router: express.Router;
     router = express.Router();
 
-    this.app.use(router); // TODO: version control API
-    this.app.use("/api/v0", GoogleRouter);
+    this.app.use("/", router); // TODO: version control API
     this.app.use("/api/v0/auth", AuthRouter);
+    this.app.use("/api/v0", GoogleRouter);
   }
 }
 
