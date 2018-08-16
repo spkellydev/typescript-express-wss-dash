@@ -39,11 +39,11 @@ class Server {
       { useNewUrlParser: true }
     );
 
-    this.app.use(
-      logger("common", {
-        stream: fs.createWriteStream("./logs/access.log", { flags: "a" })
-      })
-    );
+    // this.app.use(
+    //   logger("common", {
+    //     stream: fs.createWriteStream("./logs/access.log", { flags: "a" })
+    //   })
+    // );
     this.app.use(logger(dev ? "dev" : "combined"));
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
