@@ -2,7 +2,7 @@ import * as request from "supertest";
 import Server from "../../protocols/HttpServer";
 import * as http from "http";
 
-describe("Test the root path", () => {
+describe("Test Auth Routes", () => {
   let port: number;
   let server: http.Server;
 

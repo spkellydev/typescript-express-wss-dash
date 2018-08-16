@@ -1,7 +1,5 @@
 import * as debug from "debug";
 import * as http from "http";
-import * as logger from "morgan";
-import * as helmet from "helmet";
 import * as WebSocket from "ws";
 
 if (process.env.NODE_ENV !== "production") {

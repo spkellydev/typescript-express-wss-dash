@@ -14,6 +14,7 @@ import * as compression from "compression";
 
 // import routers
 import GoogleRouter from "../routes/GoogleRouter";
+import AuthRouter from "../routes/AuthRouter";
 
 const dev = process.env.NODE_ENV != "production";
 
@@ -57,6 +58,7 @@ class Server {
 
     this.app.use("/", router); // TODO: version control API
     this.app.use("/api/v0", GoogleRouter);
+    this.app.use("/api/v0/auth", AuthRouter);
   }
 }
 
