@@ -1,1 +1,5 @@
 ::ffff:127.0.0.1 - - [16/Aug/2018:00:04:38 +0000] "GET /api/v0/auth/signin HTTP/1.1" 200 16
+::1 - - [16/Aug/2018:00:05:26 +0000] "GET / HTTP/1.1" 404 139
+::ffff:127.0.0.1 - - [16/Aug/2018:00:11:19 +0000] "GET /api/v0/auth/signin HTTP/1.1" 200 16
+::ffff:127.0.0.1 - - [16/Aug/2018:00:20:20 +0000] "GET /api/v0/auth/signin HTTP/1.1" 200 16
+::ffff:127.0.0.1 - - [16/Aug/2018:00:21:41 +0000] "GET /api/v0/auth/signin HTTP/1.1" 200 16

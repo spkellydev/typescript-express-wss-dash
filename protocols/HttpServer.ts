@@ -56,7 +56,7 @@ class Server {
     let router: express.Router;
     router = express.Router();
 
-    this.app.use("/", router); // TODO: version control API
+    this.app.use(router); // TODO: version control API
     this.app.use("/api/v0", GoogleRouter);
     this.app.use("/api/v0/auth", AuthRouter);
   }
