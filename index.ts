@@ -2,7 +2,9 @@ import * as debug from "debug";
 import * as http from "http";
 import * as WebSocket from "ws";
 
+let test: boolean;
 if (process.env.NODE_ENV !== "production") {
+  test = process.env.NODE_ENV === "test" ? true : false;
   require("dotenv").config();
   require("longjohn");
   require("cute-stack")("pretty");
@@ -13,7 +15,9 @@ import Socketer from "./protocols/WebSockets";
 
 debug("ts-dash:server");
 
-const port = normalizePort(process.env.PORT || 8080);
+const port = normalizePort(
+  !test ? process.env.PORT || 8080 : process.env.TEST_PORT || 4040
+);
 Server.set("port", port);
 
 console.log(`Server listening on port ${port}`);
