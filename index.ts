@@ -3,8 +3,8 @@ import * as http from "http";
 import * as WebSocket from "ws";
 
 let test: boolean;
+test = process.env.NODE_ENV === "test" ? true : false;
 if (process.env.NODE_ENV !== "production") {
-  test = process.env.NODE_ENV === "test" ? true : false;
   require("dotenv").config();
   require("longjohn");
   require("cute-stack")("pretty");

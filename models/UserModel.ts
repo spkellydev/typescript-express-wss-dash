@@ -51,6 +51,7 @@ UserSchema.post<IUserDocument>(
     // duplicate key
     if (err.code === 11000) {
       // TODO: Logger
+      next(err);
       return;
     }
     next();
