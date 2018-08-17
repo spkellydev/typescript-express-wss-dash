@@ -5,10 +5,11 @@ import { Document } from "mongoose";
  * @extends mongoose.Document
  */
 export interface IUserDocument extends Document {
-  email: String;
-  password: String;
-  access?: String;
-  properties?: Array<String>;
-  createdAt?: String;
-  updatedAt?: String;
+  email: string;
+  password: string;
+  id?: string;
+  access?: string;
+  properties?: Array<string>;
+  createdAt?: string;
+  updatedAt?: string;
 }

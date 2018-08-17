@@ -1,9 +1,26 @@
 import { IUserDocument } from "../interfaces/schemas";
 import User from "../models/UserModel";
 import { Request, Response, NextFunction } from "express";
+import * as jwt from "jwt-simple";
+require("dotenv").config();
 
 class AuthController {
-  public SignUp(req: Request, res: Response, next: NextFunction) {
+  /**
+   * Token For User generates a JWT token if supplied an object with an ID propety on it
+   * @method protected
+   * @param user is required to know which user the JWT payload is assigned to
+   */
+  protected tokenForUser(user: IUserDocument) {
+    const timestamp = new Date().getTime();
+    console.log(user);
+
+    return jwt.encode(
+      { sub: user.id, iat: timestamp },
+      process.env.JWT_SECRET || "dummy_secret"
+    );
+  }
+
+  public SignUp = (req: Request, res: Response, next: NextFunction) => {
     let user: IUserDocument;
     let email: string;
     let password: string;
@@ -20,10 +37,12 @@ class AuthController {
 
       user.save((err: Error) => {
         if (err) next(err);
-        res.json(user);
+        // generate the JWT if the user is successfully added
+        const token = this.tokenForUser(user);
+        res.json({ token });
       });
     });
-  }
+  };
 }
 const authController = new AuthController();
 export default authController;

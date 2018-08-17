@@ -1,11 +1,11 @@
 import * as debug from "debug";
 import * as http from "http";
 import * as WebSocket from "ws";
+require("dotenv").config();
 
 let test: boolean;
 test = process.env.NODE_ENV === "test" ? true : false;
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
   require("longjohn");
   require("cute-stack")("pretty");
 }
