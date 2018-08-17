@@ -39,11 +39,11 @@ class Server {
       { useNewUrlParser: true }
     );
 
-    this.app.use(
-      logger("common", {
-        stream: fs.createWriteStream("./logs/access.log", { flags: "a" })
-      })
-    );
+    //this.app.use(
+    //   logger("common", {
+    //     stream: fs.createWriteStream("./logs/access.log", { flags: "a" })
+    //   })
+    // ); // TODO: Production
     this.app.use(logger(dev ? "dev" : "combined"));
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(bodyParser.json());
@@ -56,7 +56,7 @@ class Server {
     let router: express.Router;
     router = express.Router();
 
-    this.app.use(router); // TODO: version control API
+    this.app.use("/", router); // TODO: version control API
     this.app.use("/api/v0", GoogleRouter);
     this.app.use("/api/v0/auth", AuthRouter);
   }

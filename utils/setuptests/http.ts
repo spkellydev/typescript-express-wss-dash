@@ -12,7 +12,7 @@ export default class TestServer extends http.Server {
     Server.set("port", this.port);
     this.server = http.createServer(Server);
     // routes list, header slash not needed
-    this.routes = ["auth/signin", "ga"];
+    this.routes = ["ga"];
   }
 
   public setupServer(): http.Server {

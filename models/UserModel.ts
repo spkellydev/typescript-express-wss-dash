@@ -1,19 +1,6 @@
 import { Schema, Document, model } from "mongoose";
 import { genSalt, compare, hash } from "bcrypt";
-
-/**
- * IUserDocument
- * typedef for user document
- * @extends mongoose.Document
- */
-export interface IUserDocument extends Document {
-  email: String;
-  password: String;
-  access: String;
-  properties: Array<String>;
-  createdAt: String;
-  updatedAt: String;
-}
+import { IUserDocument } from "../interfaces/schemas";
 
 /**
  * UserSchema
