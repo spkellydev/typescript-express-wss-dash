@@ -4,6 +4,8 @@ import * as WebSocket from "ws";
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
+  require("longjohn");
+  require("cute-stack")("pretty");
 }
 
 import Server from "./protocols/HttpServer";
@@ -54,7 +56,7 @@ function normalizePort(val: number | string): number | string | boolean {
 
 function onError(error: NodeJS.ErrnoException): void {
   if (error.syscall !== "listen") {
-    throw error;
+    console.log(error);
   }
   const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
   switch (error.code) {
@@ -67,7 +69,7 @@ function onError(error: NodeJS.ErrnoException): void {
       process.exit(1);
       break;
     default:
-      throw error;
+      console.log(error);
   }
 }
 

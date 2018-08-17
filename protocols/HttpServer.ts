@@ -50,6 +50,15 @@ class Server {
     this.app.use(compression());
     // this.app.use(helmet()); // TODO: Production
     this.app.use(cors());
+    this.app.use(function(
+      err: Error,
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction
+    ) {
+      console.error(err.stack);
+      res.send("Something broke!");
+    });
   }
 
   public routes() {

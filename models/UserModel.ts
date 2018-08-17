@@ -1,6 +1,7 @@
 import { Schema, Document, model } from "mongoose";
 import { genSalt, compare, hash } from "bcrypt";
 import { IUserDocument } from "../interfaces/schemas";
+import { MongoError } from "mongodb";
 
 /**
  * UserSchema
@@ -43,6 +44,18 @@ UserSchema.pre<IUserDocument>("save", function(next) {
     });
   });
 });
+
+UserSchema.post<IUserDocument>(
+  "save",
+  (err: MongoError, doc, next): void => {
+    // duplicate key
+    if (err.code === 11000) {
+      // TODO: Logger
+      return;
+    }
+    next();
+  }
+);
 
 UserSchema.methods.comparePassword = (
   suppliedPw: String,
