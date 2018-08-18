@@ -30,6 +30,22 @@ describe("Test API Routes", () => {
     });
   });
 
+  test("user can sign in and receive jwt", done => {
+    let user = {
+      email: "spkellydev@gmail.com",
+      password: "1234"
+    };
+    request(server)
+      .post("/api/v0/auth/signin")
+      .send(user)
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body).toHaveProperty("token");
+        done();
+      });
+  });
+
   test("User can sign up", done => {
     let email = `${new Date().getTime()}@gmail.com`;
     request(server)
