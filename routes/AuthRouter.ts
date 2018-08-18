@@ -1,18 +1,30 @@
 import { Router } from "express";
 import AuthController from "../controllers/AuthController";
+import * as passport from "passport";
+import strats from "../services/passport";
+
+passport.use(strats.localLogin);
+passport.use(strats.jwtLogin);
+const requireSignIn = passport.authenticate("local", { session: false });
+const requireAuth = passport.authenticate("jwt", { session: false });
 
 class AuthRouter {
-  router: Router;
+  public router: Router;
+  public passportOptions: passport.AuthenticateOptions;
   constructor() {
+    this.passportOptions = {
+      session: false
+    };
     this.router = Router();
-    this.routes();
+    this.Routes();
   }
 
-  public routes() {
+  public Routes() {
+    this.router.post("/signin", requireSignIn, AuthController.SignIn);
     this.router.post("/signup", AuthController.SignUp);
   }
 }
 
 const authRoutes = new AuthRouter();
-authRoutes.routes();
+authRoutes.Routes();
 export default authRoutes.router;

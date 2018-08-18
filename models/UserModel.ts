@@ -59,10 +59,10 @@ UserSchema.post<IUserDocument>(
 );
 
 UserSchema.methods.comparePassword = (
-  suppliedPw: String,
+  suppliedPw: string,
   actualPw: string,
   cb: any
-) => {
+): void => {
   compare(suppliedPw, actualPw, (err, isMatch) => {
     if (err) cb(err);
 
