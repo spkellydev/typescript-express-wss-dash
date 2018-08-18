@@ -15,6 +15,7 @@ import * as compression from "compression";
 // import routers
 import GoogleRouter from "../routes/GoogleRouter";
 import AuthRouter from "../routes/AuthRouter";
+require("dotenv").config();
 
 const dev = process.env.NODE_ENV != "production";
 
@@ -33,7 +34,7 @@ class Server {
   }
 
   config() {
-    const MONGO_URI = "mongodb://localhost:27017/dashboard";
+    const MONGO_URI = `mongodb://localhost:27017/dashboard`;
     mongoose.connect(
       MONGO_URI || process.env.MONGODB_URI,
       { useNewUrlParser: true }

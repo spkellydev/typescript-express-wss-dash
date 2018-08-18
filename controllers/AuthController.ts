@@ -12,8 +12,6 @@ class AuthController {
    */
   protected tokenForUser(user: IUserDocument) {
     const timestamp = new Date().getTime();
-    console.log(user);
-
     return jwt.encode(
       { sub: user.id, iat: timestamp },
       process.env.JWT_SECRET || "dummy_secret"

@@ -72,11 +72,12 @@
       }
     },
     "testMatch": [
-      "**/__tests__/**/*.+(ts|tsx|js)"
+      "**/__tests__/**/*.+(ts)"
     ],
     "modulePathIgnorePatterns": [
       "<rootdir>\\utils\\**\\*.*",
       "<rootdir>\\dist\\**\\*.*"
-    ]
+    ],
+    "timers": "fake"
   }
 }
