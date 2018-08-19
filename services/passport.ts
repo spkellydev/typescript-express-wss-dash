@@ -11,7 +11,6 @@ import { Strategy as LocalStrategy, IStrategyOptions } from "passport-local";
 const localOptions: IStrategyOptions = { usernameField: "email" };
 
 const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
-  console.log("init");
   User.findOne({ email }, (err: Error, user: IUserDocument) => {
     if (err) return done(err);
     if (!user) return done(null, false);
