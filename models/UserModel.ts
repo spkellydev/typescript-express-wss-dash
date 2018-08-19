@@ -1,4 +1,4 @@
-import { Schema, Document, model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { genSalt, compare, hash } from "bcrypt";
 import { IUserDocument } from "../interfaces/schemas";
 import { MongoError } from "mongodb";
