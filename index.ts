@@ -36,7 +36,10 @@ setInterval(() => {
     }
 
     // kill polling
-    if (!ws.isAlive) return ws.terminate();
+    if (!ws.isAlive) {
+      console.log("terminated");
+      return ws.terminate();
+    }
 
     ws.isAlive = false;
     ws.ping(null, false);

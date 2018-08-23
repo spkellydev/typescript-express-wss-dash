@@ -18,6 +18,7 @@ class Socketer implements ISocketer {
 
   public listen(): void {
     this.wss.on("connection", (ws: IExtWebSocket) => {
+      console.log("connected");
       ws.isAlive = true;
 
       ws.on("pong", () => {
@@ -25,6 +26,7 @@ class Socketer implements ISocketer {
       });
 
       ws.on("message", this.onMessage);
+      ws.on("close", this.onClose);
     });
   }
 
@@ -46,6 +48,10 @@ class Socketer implements ISocketer {
     } else {
       ws.send(`Hello, you sent -> ${message}`);
     }
+  }
+
+  public onClose(): void {
+    console.log("disconnect on server");
   }
 
   /**
