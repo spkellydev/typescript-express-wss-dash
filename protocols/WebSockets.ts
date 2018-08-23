@@ -25,7 +25,26 @@ class Socketer implements ISocketer {
         ws.isAlive = true;
       });
 
-      ws.on("message", this.onMessage);
+      ws.on("message", (message: string) => {
+        const broadcastRegex = /^broadcast\:/;
+
+        if (broadcastRegex.test(message)) {
+          message = message.replace(broadcastRegex, "");
+
+          //send back the message to the other clients
+          this.wss.clients.forEach(client => {
+            console.log("client");
+            if (client != ws) {
+              client.send(`Hello, broadcast message -> ${message}`);
+            }
+          });
+        } else {
+          let msg = JSON.stringify({
+            message: `Hello, you sent -> ${message}`
+          });
+          ws.send(msg);
+        }
+      });
       ws.on("close", this.onClose);
     });
   }
@@ -41,11 +60,13 @@ class Socketer implements ISocketer {
 
       //send back the message to the other clients
       this.wss.clients.forEach(client => {
+        console.log("client");
         if (client != ws) {
           client.send(`Hello, broadcast message -> ${message}`);
         }
       });
     } else {
+      console.log("here");
       ws.send(`Hello, you sent -> ${message}`);
     }
   }

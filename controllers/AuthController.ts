@@ -20,7 +20,6 @@ class AuthController {
 
   // user has been authenticated by passport service, needs token
   public SignIn = (req: Request, res: Response, next: NextFunction) => {
-    console.log("init authcontroller");
     res.send({ token: this.tokenForUser(req.user) });
   };
 
