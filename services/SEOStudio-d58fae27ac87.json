@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "seostudio-214322",
+  "private_key_id": "d58fae27ac87d17562cf5ae7ffb49f1d6a5e8078",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCy5kmxIqcTAPCG\nIXpt3FrPweqbFZy/R7309KvbgPxfHe1pCm4/J+zEwhiW3ehcOqLVTLFwnNFtDZge\n0/ms4cuDRUCqasZOHtlM1kKeJ33VAbsYNKfsGjXt7L6mtfIqMGSCuElrQa/IHxet\nBoybrG++XHKR9QyVcsSJVUE63GhIFc9BonGHGcXIA0PkaYFow+D0aB7AXn1gWIPg\nmALXKmhJU6VDpsDPZvL2CkAkN+jsS9aJ0PiGqnrJXj+eWCOLJvEBtvugVOfmuWbX\nSUM8ws9LSL6Rz5JkzyvWktGcpSMlMIHzAjKQHye4MCUZizx5hhIVfPdDwhtnXuN9\n6Q1IIOWJAgMBAAECggEAAN0gEa0FlcaeYq5DjqLOu7nHiTRxFJdZ8U1DaOAM/Hbe\nYnBzdBrlYwwaAgGdI7zcKvsx9UWqRujyUl4RpPh5jThGzvBoLrU8R6TWVcqUc2If\nL0dy8vfikn0V/yPHwR5ksmoFqLozdu5S7fDLudwfbEiWRZlIAiFJ3xGX4b+WZnPV\n3ZPm2NDiQYBIcVksVSe4QtlVy2zXiIVJwvtZkMxKuff4LvuxKf+A+3EJ64JCRUf4\nOjUpHCeiH/yARiiIaL3ijfrXzd8AGPM43Hae0l1iYN6HnGsqOoM3yovsN2/48/et\noLAgtj6YOGv7aFwYJ4+1LZRNpVeTkggIWb2oSyiUEQKBgQDe5Gv9WDRNCAxvdGNA\n/d1xfe9pfL3Zv/aK2kVqgEzfUO+ub91POmhuJEgPI45d8U3ACt8ZgG+xb4QdahRw\nXfVHjOB2znZKEtFDcDPuE8TAnmncO7UfMQerYh4P5CzpDTX/IN6PXdUt1dbjC7YW\nw5y9FIdaMdOOV0myjQkgNHVVnQKBgQDNeQYH4tWUaGJcTlsccGfGQyLG6PapOj4l\npk39z4apAU3/TXkddmd6OwfwEYHZBPgDZeXTU8HmNLVJFPvuPqOcY9+Xxj0uzLa1\ng3jYAPO/aprErNnILhoCFxI/LO65C1UaZBPxQWmdS3lpEr4xqYpslIG9fKjQafmb\nOPzKyMPh3QKBgQDQFLLz+mopF8B0NFWMkPMwRn9BHWEnbVw+WHLBcDFTsX1wfaI/\nmqlvWZOj/m+kJ+eLxxpr9klPfmn6A9Q86ppXR58tiqVHlbWinZb9RZtCryDopxz5\nl44vYxPphfyfPOQR35+me9TOS3mm0IIXUlp68jVB8I4trjNw6tWAKTj4yQKBgGTd\nwGQmqopMI90Eah2v4IGne28B9fRlLxT0atzp/0T/6vYlZgtckLekOuVS8tdCZS3l\n28i+GTWVMllJ/9KY1WB0dtLe8jIDNL4uaChBb2bMQmXCJLbsSsAz6zUwLZCRS5nE\n/zUz01DwOA2osc1XWSisTnRiucx1+Z6FfzNdEyvRAoGAKASwZjn9BLNNFd7nBFfi\nDEkmfJHlv8QKDcI8/Ci0WltWJo5uJgBkI1LoGmq87rDuUKW7aVrQB8Vn2PZJd8AY\nscwU3KzcgzM3i7UiAEEcF0CeBEI/CUP0n5UGjC3l3a8NMH4ubZGZmWv9i/WI4izY\nw1DBUP7reGE9cGKyVePSKmc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "spk-design@seostudio-214322.iam.gserviceaccount.com",
+  "client_id": "101699630438750520464",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/spk-design%40seostudio-214322.iam.gserviceaccount.com"
+}

@@ -67,7 +67,7 @@ class Server {
     router = express.Router();
 
     this.app.use("/", router); // TODO: version control API
-    this.app.use("/api/v0", GoogleRouter);
+    this.app.use("/api/v0/google", GoogleRouter);
     this.app.use("/api/v0/auth", AuthRouter);
   }
 }
