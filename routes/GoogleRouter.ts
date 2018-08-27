@@ -13,6 +13,7 @@ class GoogleRouter {
   public GetData(req: Request, res: Response, next: NextFunction): void {
     const SERVICE_ACCOUNT_EMAIL =
       "reactanalytics@celtic-current-212815.iam.gserviceaccount.com";
+    // p12 -> pem
     const SERVICE_ACCOUNT_KEY = path.resolve(
       __dirname,
       "../services/key_cert.pem"
@@ -27,7 +28,7 @@ class GoogleRouter {
     analytics
       .requestData({
         auth: authClient,
-        ids: "ga:178297180",
+        ids: "ga:178297180", // view id
         "start-date": "30daysAgo",
         "end-date": "today",
         metrics: "ga:hits",
@@ -35,6 +36,9 @@ class GoogleRouter {
       })
       .then(ga => {
         res.json(ga.data);
+      })
+      .catch(err => {
+        res.json(err);
       });
   }
 

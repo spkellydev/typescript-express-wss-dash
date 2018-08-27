@@ -27,3 +27,4 @@ Google Analytics API creditienals should be registered as a service account. The
 - Upload JSON key
 - Add email address to analytics profile
 - Create authorized user
+- `openssl pkcs12 -in SEOStudio-b32c4ceb75d3.p12 -out 5678-key.pem -passin pass:notasecret -nodes`
